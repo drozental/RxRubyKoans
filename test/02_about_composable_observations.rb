@@ -2,12 +2,13 @@ require_relative 'test_helper'
 
 class AboutComposableObservations < Minitest::Test
   def test_composable_add
+    expected_result = nil
     received = 0
     numbers = [10, 100, 1000]
 
     RxRuby::Observable.from(numbers).sum.subscribe {|x| received = x }
 
-    assert_equal 1110, received
+    assert_equal expected_result, received
   end
 
   def test_composable_before_and_after
@@ -21,8 +22,10 @@ class AboutComposableObservations < Minitest::Test
       .do {|n| b += n.to_s }
       .subscribe
 
-    assert_equal '123456', a
-    assert_equal '246', b
+    expected_a = nil
+    expected_b = nil
+    assert_equal expected_a, a
+    assert_equal expected_b, b
   end
 
   def test_we_wrote_this
@@ -33,7 +36,8 @@ class AboutComposableObservations < Minitest::Test
       .select {|name| name.size <= 4 }
       .subscribe {|name| received.push(name) }
 
-    assert_equal 'Bart,Wes,Erik,Matt', received.join(',')
+    expected_result = nil
+    assert_equal expected_result, received.join(',')
   end
 
   def test_converting_events
@@ -54,7 +58,8 @@ class AboutComposableObservations < Minitest::Test
                         .map {|mov| mov - 50 }
                         .subscribe {|mov| received += mov.to_s + ', ' }
 
-    assert_equal "50, 150, 100, ", received
+    expected_result = nil
+    assert_equal expected_result, received
   end
 
   def test_checking_everything
@@ -65,7 +70,8 @@ class AboutComposableObservations < Minitest::Test
       .all? {|n| n.even? }
       .subscribe {|n| received = n }
 
-    assert_equal true, received
+    expected_result = nil
+    assert_equal expected_result, received
   end
 
   def test_composition_means_the_sum_is_greater_than_parts
@@ -74,6 +80,7 @@ class AboutComposableObservations < Minitest::Test
 
     numbers.select {|n| n > 8 }.sum.subscribe {|sum| received = sum }
 
-    assert_equal 19, received
+    expected_result = nil
+    assert_equal expected_result, received
   end
 end

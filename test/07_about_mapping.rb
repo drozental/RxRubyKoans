@@ -7,8 +7,8 @@ class AboutMapping < Minitest::Test
     RxRuby::Observable.range(1, 3)
       .flat_map {|x, i| RxRuby::Observable.of(x+1) }
       .subscribe {|r| results.push(r) }
-
-    assert_equal '234', results.join
+    expected_result = nil
+    assert_equal expected_result, results.join
   end
 
   def test_flat_map_latest_only_gets_the_latest_value

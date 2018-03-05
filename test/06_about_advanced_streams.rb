@@ -4,11 +4,13 @@ class AboutAdvancedStreams < Minitest::Test
 
   def test_merging
     easy = []
-    you = RxRuby::Observable.of(1,2,3)
+    you = RxRuby::Observable.of(1, 2, 3)
     me = RxRuby::Observable.of('A', 'B', 'C')
-    you.merge(me).subscribe {|item| easy.push(item) }
+    you.merge(me).subscribe { |item| easy.push(item) }
 
-    assert_equal '12A3BC', easy.join
+    expected_result = nil # '12A3BC' -> why?
+
+    assert_equal expected_result, easy.join
   end
 
   def test_merging_events
@@ -31,8 +33,10 @@ class AboutAdvancedStreams < Minitest::Test
     subject_2.on_next('is')
     subject_1.on_next('perfect.')
 
-    assert_equal "I am nobody. Nobody is perfect.", both.join(' ')
-    assert_equal "I am perfect.", first.join(' ')
+    expected_both = nil
+    expected_first = nil
+    assert_equal expected_both, both.join(' ')
+    assert_equal expected_first, first.join(' ')
   end
 
   def test_splitting_up
@@ -61,16 +65,16 @@ class AboutAdvancedStreams < Minitest::Test
 
     numbers_obs.average.subscribe {|n| average = n }
 
-    numbers.on_next(2)
-    numbers.on_next(2)
-    numbers.on_next(2)
-    numbers.on_next(2)
-    numbers.on_next(2)
+    numbers.on_next(20)
+    numbers.on_next(20)
+    numbers.on_next(20)
+    numbers.on_next(20)
+    numbers.on_next(20)
 
     numbers.on_completed
 
-    assert_equal 15, sum
-    assert_equal 2, average
+    assert_equal 105, sum
+    assert_equal 20, average
   end
 
 end

@@ -13,7 +13,8 @@ class AboutImpreative < Minitest::Test
       }
       .subscribe {|r| results.push(r) }
 
-    assert_equal '246810', results.join
+    expected_result = nil
+    assert_equal expected_result, results.join
   end
 
   def test_can_make_decision_with_if_and_else
@@ -29,7 +30,9 @@ class AboutImpreative < Minitest::Test
       }
       .subscribe {|r| results.push(r) }
 
-    assert_equal '23445678', results.join
+    expected_result = nil # '23445678'
+
+    assert_equal expected_result, results.join
   end
 
   def test_we_can_makae_test_cases
@@ -50,7 +53,8 @@ class AboutImpreative < Minitest::Test
       }
       .subscribe {|x| result = x }
 
-    assert_equal 4, result
+    expected_result = nil # 4
+    assert_equal expected_result, result
   end
 
   def test_can_also_have_default_case
@@ -72,7 +76,8 @@ class AboutImpreative < Minitest::Test
       }
       .subscribe {|x| result = x}
 
-    assert_equal 5, result
+    expected_result = nil # 5
+    assert_equal expected_result, result
   end
 
   def test_while_does_something_until_proven_false
@@ -85,7 +90,7 @@ class AboutImpreative < Minitest::Test
                RxRuby::Observable.just(42)
               )
              .subscribe {|r| result.push(r) }
-
-    assert_equal '4242', result.join
+    expected_result = nil # 4242
+    assert_equal expected_result, result.join
   end
 end

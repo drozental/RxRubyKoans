@@ -16,7 +16,8 @@ class AboutQuerying < Minitest::Test
       .map {|num| num.to_s }
       .subscribe {|string| strings.push(string) }
 
-    assert_equal "11,22,33,44,55,66,77,88,99", strings.join(',')
+    expected_result = nil
+    assert_equal expected_result, strings.join(',')
   end
 
   def test_querying_over_events
@@ -41,11 +42,16 @@ class AboutQuerying < Minitest::Test
   def test_buffering_with_count_and_skip
     results = []
 
-    RxRuby::Observable.range(1, 10)
+    RxRuby::Observable
+      .range(1, 10)
       .buffer_with_count(5, 5)
       .subscribe {|r| results.push(r) }
 
-    assert_equal '12345',  results[0].join
-    assert_equal '678910', results[1].join
+    expected_result_1 = nil
+    expected_result_2 = nil
+
+    #http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-bufferCount
+    assert_equal expected_result_1,  results[0].join
+    assert_equal expected_result_2, results[1].join
   end
 end

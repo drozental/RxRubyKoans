@@ -23,6 +23,8 @@ class AboutTime < Minitest::Test
     people_obs.delay(time).subscribe {|x| received = x }
     people.on_next('Godot')
 
+    assert_nil received
+
     sleep timeout
 
     assert_equal 'Godot', received
