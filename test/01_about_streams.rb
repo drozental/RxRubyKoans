@@ -2,23 +2,23 @@ require_relative 'test_helper'
 
 class AboutStreams < Minitest::Test
   def test_simple_subscription
-    expected_result = nil
+    expected_result = 42
     stream = RxRuby::Observable.just(42)
     stream.subscribe {|x| assert_equal(expected_result, x) }
   end
 
   def test_what_comes_in_goes_out
-    expected_result = nil
+    expected_result = 101
     stream = RxRuby::Observable.just(101)
     stream.subscribe {|x| assert_equal(x, expected_result) }
   end
 
   def test_same_as_event_stream
-    expected_result = nil
+    expected_result = 37
     events = RxRuby::Subject.new
     source = events.as_observable
-    source.subscribe {|x| assert_equal(37, x) }
-    events.on_next(expected_result)
+    source.subscribe {|x| assert_equal(expected_result, x) }
+    events.on_next(37)
   end
 
   def test_how_event_relate_to_observables
@@ -35,11 +35,11 @@ class AboutStreams < Minitest::Test
   end
 
   def test_event_stream_have_multiple_results
-    expected_result = nil
+    expected_result = 17
     event_stream_result = 0
     events = RxRuby::Subject.new
     source = events.as_observable
-    subscriber = source.subscribe {|x| event_stream_result += x }
+    source.subscribe {|x| event_stream_result += x }
 
     events.on_next(10)
     events.on_next(7)
@@ -48,7 +48,7 @@ class AboutStreams < Minitest::Test
   end
 
   def test_simple_return
-    expected_result = nil
+    expected_result = 'foo'
     received = ''
     RxRuby::Observable.just('foo').subscribe {|x| received = x }
 
@@ -56,7 +56,7 @@ class AboutStreams < Minitest::Test
   end
 
   def test_the_last_event
-    expected_result = nil
+    expected_result = 'bar'
     received = ''
     names = %w[foo bar]
 
@@ -66,7 +66,7 @@ class AboutStreams < Minitest::Test
   end
 
   def test_everything_counts
-    expected_result = nil
+    expected_result = 7
     received = 0
     numbers = [3,4]
 
@@ -76,7 +76,7 @@ class AboutStreams < Minitest::Test
   end
 
   def test_this_is_still_an_event_stream
-    expected_result = nil
+    expected_result = 15
     received = 0
     numbers = RxRuby::Subject.new
     source = numbers.as_observable
@@ -90,7 +90,7 @@ class AboutStreams < Minitest::Test
   end
 
   def test_all_events_will_be_received
-    expected_result = nil
+    expected_result = 'Working 98765'
     received = 'Working '
     numbers = Array(5..9).reverse
 
@@ -98,9 +98,9 @@ class AboutStreams < Minitest::Test
 
     assert_equal expected_result, received
   end
-
+  #
   def test_do_things_in_the_middle
-    expected_result = nil
+    expected_result = '4 = Party,3 = Party,2 = Party,1 = Study like mad'
     status = []
     range = Array(1..4).reverse
     days_till_test = RxRuby::Observable.from(range)
@@ -112,7 +112,7 @@ class AboutStreams < Minitest::Test
   end
 
   def test_nothing_listens_until_you_subscribe
-    expected_result = nil
+    expected_result = 0
     sum = 0
     range = Array(1..10)
     numbers = RxRuby::Observable.from(range)
@@ -122,12 +122,12 @@ class AboutStreams < Minitest::Test
     assert_equal expected_result, sum
 
     observable.subscribe
-    expected_result = nil
+    expected_result = 55
     assert_equal expected_result, sum
   end
 
   def test_events_after_you_unsubscribe_dont_count
-    expected_result = nil
+    expected_result = 3
     sum = 0
     numbers = RxRuby::Subject.new
 
@@ -147,7 +147,7 @@ class AboutStreams < Minitest::Test
   end
 
   def test_events_while_subscribing
-    expected_result = nil
+    expected_result = 'you look pretty'
     received = []
     words = RxRuby::Subject.new
     words_source = words.as_observable
