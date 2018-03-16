@@ -2,7 +2,7 @@ require_relative 'test_helper'
 
 class AboutComposableObservations < Minitest::Test
   def test_composable_add
-    expected_result = nil
+    expected_result = 1110
     received = 0
     numbers = [10, 100, 1000]
 
@@ -22,8 +22,8 @@ class AboutComposableObservations < Minitest::Test
       .do {|n| b += n.to_s }
       .subscribe
 
-    expected_a = nil
-    expected_b = nil
+    expected_a = '123456'
+    expected_b = '246'
     assert_equal expected_a, a
     assert_equal expected_b, b
   end
@@ -36,7 +36,7 @@ class AboutComposableObservations < Minitest::Test
       .select {|name| name.size <= 4 }
       .subscribe {|name| received.push(name) }
 
-    expected_result = nil
+    expected_result = 'Bart,Wes,Erik,Matt'
     assert_equal expected_result, received.join(',')
   end
 
@@ -58,7 +58,7 @@ class AboutComposableObservations < Minitest::Test
                         .map {|mov| mov - 50 }
                         .subscribe {|mov| received += mov.to_s + ', ' }
 
-    expected_result = nil
+    expected_result = '50, 150, 100, '
     assert_equal expected_result, received
   end
 
@@ -70,7 +70,7 @@ class AboutComposableObservations < Minitest::Test
       .all? {|n| n.even? }
       .subscribe {|n| received = n }
 
-    expected_result = nil
+    expected_result = true
     assert_equal expected_result, received
   end
 
@@ -80,7 +80,7 @@ class AboutComposableObservations < Minitest::Test
 
     numbers.select {|n| n > 8 }.sum.subscribe {|sum| received = sum }
 
-    expected_result = nil
+    expected_result = 19
     assert_equal expected_result, received
   end
 end
