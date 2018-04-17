@@ -16,7 +16,7 @@ class AboutQuerying < Minitest::Test
       .map {|num| num.to_s }
       .subscribe {|string| strings.push(string) }
 
-    expected_result = nil
+    expected_result = '11,22,33,44,55,66,77,88,99'
     assert_equal expected_result, strings.join(',')
   end
 
@@ -44,14 +44,16 @@ class AboutQuerying < Minitest::Test
 
     RxRuby::Observable
       .range(1, 10)
-      .buffer_with_count(5, 5)
+      .buffer_with_count(5, 6)
       .subscribe {|r| results.push(r) }
 
-    expected_result_1 = nil
-    expected_result_2 = nil
+    expected_result_1 = '12345'
+    expected_result_2 = '78910'
+    expected_result_3 = nil
 
     #http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-bufferCount
     assert_equal expected_result_1,  results[0].join
     assert_equal expected_result_2, results[1].join
+    # assert_equal expected_result_3, results[2].join
   end
 end
